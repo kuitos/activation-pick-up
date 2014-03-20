@@ -1,0 +1,33 @@
+<!--
+ * Author: kui.liu
+ * Date: 14-3-16
+ * Time: 下午9:58
+ *-->
+<nscript get-root type="text/javascript" _src="scripts/controllers/ActivateCodeCtrl.js"></nscript>
+<div ng-controller="ActivateCodeCtrl">
+    <nav class="navbar navbar-default" role="navigation">
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <label style="width: 30px;padding-top: 5px;">筛选</label>
+                <select class="form-control input-sm" ng-model="queryParams.status">
+                    <option value=''>是否激活</option>
+                    <option value=1>已激活</option>
+                    <option value=0>未激活</option>
+                </select>
+                <select class="form-control input-sm" ng-model="queryParams.activationType">
+                    <option value=''>激活类型</option>
+                    <option value=1>三斤樱桃</option>
+                </select>
+            </div>
+        </form>
+
+        <form class="navbar-form navbar-right" role="search" style="margin-right: 8px">
+            <div class="form-group">
+                <input type="text" ng-model="queryParams.pkid" class="form-control" placeholder="序列号" />
+            </div>
+            <button type="button" class="btn btn-default" ng-click="search(queryParams.pkid)">搜索</button>
+        </form>
+    </nav>
+
+    <div class="gridStyle" ng-grid="gridOptions"></div>
+</div>

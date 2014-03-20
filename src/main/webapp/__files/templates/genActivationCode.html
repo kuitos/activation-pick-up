@@ -1,0 +1,19 @@
+<!--
+ * Author: kui.liu
+ * Date: 14-3-16
+ * Time: 下午8:43
+ *-->
+<nscript get-root type="text/javascript" _src="scripts/controllers/GenAvtivationCodeCtrl.js"></nscript>
+<div class="container" ng-controller="GenAvtivationCodeCtrl">
+    <form class="form-horizontal pl15"  role="form" ng-submit="generate(amount)">
+        <div class="form-group mt15">
+            <label class="col-sm-2 control-label">生成数量</label>
+            <div class="col-sm-3">
+                <input ng-model="amount" class="form-control" type="number" min="1"/>
+            </div>
+        </div>
+        <div class="form-group tc">
+            <button type="submit" class="btn btn-primary">生成</button>
+        </div>
+    </form>
+</div>

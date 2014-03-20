@@ -1,0 +1,17 @@
+.gridStyle {
+    border: 1px solid rgb(212, 212, 212);
+    width: 99%;
+    height: 400px;
+}
+
+.pl15 {
+    padding-left: 15px;
+}
+
+.tc {
+    text-align: center !important;
+}
+
+.mt15 {
+    margin-top: 15px;
+}

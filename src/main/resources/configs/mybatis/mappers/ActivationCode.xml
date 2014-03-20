@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ActivationCode">
+
+    <select id="getMaxSerialNumber" resultType="integer">
+        SELECT Auto_increment FROM information_schema.tables WHERE table_name='tb_serial_code' LIMIT 1;
+    </select>
+
+    <insert id="insertActivationCode" parameterType="list">
+        insert into tb_serial_code (code_password, status, activation_type, created)
+        values
+        <foreach collection="list" item="map" separator=",">
+            (#{map},0,0,now())
+        </foreach>;
+    </insert>
+
+    <select id="getActivationCodes" parameterType="map" resultType="map">
+        select pkid
+        , code_password as codePassword
+        ,status
+        ,activation_type as activationType
+        ,created
+        ,modified
+        from tb_serial_code
+        <where>
+            <if test="pkid != '' and pkid != null">
+                pkid = #{pkid}
+            </if>
+            <if test="status != '' and status != null">
+                and status = #{status}
+            </if>
+            <if test="activationType != '' and activationType != null">
+                and activationType = #{activationType}
+            </if>
+        </where>
+        order by pkid
+        limit ${startRow},${pageSize}
+    </select>
+
+    <select id="countActivationCodes" resultType="integer" parameterType="map">
+        select count(0) from tb_serial_code
+        <where>
+            <if test="pkid != '' and pkid != null">
+                pkid = #{pkid}
+            </if>
+            <if test="status != '' and status != null">
+                and status = #{status}
+            </if>
+            <if test="activationType != '' and activationType != null">
+                and activationType = #{activationType}
+            </if>
+        </where>
+
+    </select>
+
+</mapper>

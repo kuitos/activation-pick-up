@@ -1,0 +1,93 @@
+<!--
+ * Author: kui.liu
+ * Date: 14-3-15
+ * Time: 下午11:19
+ *-->
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!
+<html class="no-js" lang="en"> <![endif]-->
+<!DOCTYPE html>
+<html ng-app="Activation">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>提货卡激活系统</title>
+
+    <!--[if lte IE 8]>
+    <script>
+        document.createElement('tabs');
+        document.createElement('pane');
+        document.createElement('ng-pluralize');
+    </script>
+    <![endif]-->
+    <script type="text/javascript">
+        var root_files;
+        var root;
+        // dynamically add base tag as well as css and javascript files.
+        // we can't add css/js the usual way, because some browsers (FF) eagerly prefetch resources
+        // before the base attribute is added, causing 404 and terribly slow loading of the docs app.
+        (function () {
+            var headEl = document.getElementsByTagName('head')[0], sync = true;
+
+            var pathName = window.document.location.pathname;
+            var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+            root = projectName + "/"
+            root_files = root + "__files/";
+
+            addTag('base', {href: root_files});
+            addTag('link', {rel: 'stylesheet', href: 'styles/bootstrap/bootstrap-3.1.1.min.css', type: 'text/css'}, sync);
+            addTag('link', {rel: 'stylesheet', href: 'styles/bootstrap/ng-grid-2.0.8.min.css', type: 'text/css'}, sync);
+            addTag('link', {rel: 'stylesheet', href: 'styles/bootstrap/bootstrap-3.1.1.min.css', type: 'text/css'}, sync);
+            addTag('link', {rel: 'stylesheet', href: 'styles/app.css', type: 'text/css'}, sync);
+            addTag('script', {src: 'jsLib/jquery/jquery-1.11.0.min.js' }, sync);
+            addTag('script', {src: 'jsLib/angular/angular-1.2.13.min.js' }, sync);
+            addTag('script', {src: 'jsLib/angular-ui/ui-bootstrap-tpls-0.10.0.min.js' }, sync);
+            addTag('script', {src: 'jsLib/angular-ui/ng-grid-2.0.8.min.js' }, sync);
+
+            addTag('script', {src: 'scripts/directives.js' }, sync);
+            addTag('script', {src: 'scripts/services.js' }, sync);
+            addTag('script', {src: 'scripts/MainCtrl.js' }, sync);
+
+            function addTag(name, attributes, sync) {
+                var el = document.createElement(name), attrName;
+
+                for (attrName in attributes) {
+                    el.setAttribute(attrName, attributes[attrName]);
+                }
+
+                sync ? document.write(outerHTML(el)) : headEl.appendChild(el);
+            }
+
+            function outerHTML(node) {
+                // if IE, Chrome take the internal method otherwise build one
+                return node.outerHTML || (function (n) {
+                    var div = document.createElement('div'), h;
+                    div.appendChild(n);
+                    h = div.innerHTML;
+                    div = null;
+                    return h;
+                })(node);
+            }
+        })();
+    </script>
+
+</head>
+<body ng-controller="MainCtrl">
+<div class="row-fluid">
+    <div class="span10 well">
+        <tabset>
+            <tab ng-repeat="pane in panes" active="pane.active" select="setPaneUrl(pane)">
+                <tab-heading>
+                    {{pane.title}}
+                </tab-heading>
+                <ng-include src="pane.url"></ng-include>
+            </tab>
+        </tabset>
+    </div>
+</div>
+</body>
+</html>
