@@ -65,8 +65,13 @@ public class ActivationCodeController extends BaseController {
         return genResultMapper(result, null);
     }
 
-    public String activateCode(@RequestParam int pkid) {
-        activationCodeService.activateCode(pkid);
+    @ResponseBody
+    @RequestMapping(value = "activateCode", method = RequestMethod.GET)
+    public String activateCode(@RequestParam int pkid, @RequestParam int activateType) {
+        Map<String, Integer> paraMap = new HashMap<>();
+        paraMap.put("pkid", pkid);
+        paraMap.put("activateType", activateType);
+        activationCodeService.activateCode(paraMap);
         return "激活成功!";
     }
 }

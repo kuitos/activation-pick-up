@@ -53,8 +53,8 @@
         </where>
     </select>
 
-    <update id="activateCode" parameterType="integer">
-        update tb_serial_code set status = 1 where pkid = ${pkid}
+    <update id="activateCode" parameterType="map">
+        update tb_serial_code set status = 1,modified=now(),activation_type = #{activationType} where pkid = #{pkid};
     </update>
 
 </mapper>

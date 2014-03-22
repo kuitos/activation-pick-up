@@ -45,9 +45,7 @@ public class ActivationCodeService {
         return mybatisDao.getSingleRow("ActivationCode.countActivationCodes", BeanUtil.transBean2Map(activationCodeVo));
     }
 
-    public void activateCode (int pkid){
-        mybatisDao.save("ActivationCode.activateCode", pkid);
+    public void activateCode(Map<String, Integer> paraMap) {
+        mybatisDao.save("ActivationCode.activateCode", paraMap);
     }
-
-
 }

@@ -3,7 +3,7 @@
 * Date: 14-3-16
 * Time: 下午2:42
 */
-angular.module("Activation", ["ui.bootstrap", "services", "directives"]).controller("MainCtrl", ["$scope", function ($scope) {
+angular.module("Activation", ["services", "directives"]).controller("MainCtrl", ["$scope", function ($scope) {
 
     $scope.panes = [
         {title: "序列号生成", active: true},
