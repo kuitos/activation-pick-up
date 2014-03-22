@@ -5,6 +5,7 @@
  */
 function GenAvtivationCodeCtrl($scope, $http) {
 
+    // 生成序列号
     $scope.generate = function (amount) {
         $http.get(root + "ctrl/activationCode/genActivationCode?amount=" + amount).success(function (res) {
             alert(res);

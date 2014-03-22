@@ -31,8 +31,10 @@ public class ActivationCodeService {
         return mybatisDao.getSingleRow("ActivationCode.getMaxSerialNumber", null);
     }
 
-    public void genActivationCodes(List<Object> codesList) {
-        mybatisDao.save("ActivationCode.insertActivationCode", codesList);
+    public void genActivationCodes(List<Map<String, Object>> codesList) {
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("codesList", codesList);
+        mybatisDao.save("ActivationCode.insertActivationCode", paraMap);
     }
 
     public List<Map<String, Object>> getActivationCodes(ActivationCodeVo activationCodeVo) {
@@ -41,6 +43,10 @@ public class ActivationCodeService {
 
     public int countActivationCodes(ActivationCodeVo activationCodeVo) {
         return mybatisDao.getSingleRow("ActivationCode.countActivationCodes", BeanUtil.transBean2Map(activationCodeVo));
+    }
+
+    public void activateCode (int pkid){
+        mybatisDao.save("ActivationCode.activateCode", pkid);
     }
 
 

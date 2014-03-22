@@ -15,7 +15,9 @@ function ActivateCodeCtrl($scope, kGrid, appCache, $http) {
             { field: 'activationType', displayName: '激活类型'},
             { field: 'created', displayName: '生成时间'},
             { field: 'modified', displayName: '修改时间'},
-            { field: 'operation', displayName: '操作', cellTemplate: '<div class="ngCellText" ' + 'ng-class="col.colIndex()">' + '<span ng-cell-text><a href="#" ng-disabled="row.entity.status==1" ng-click="config(row.entity.pkid)">激活</a></span></div>'}
+            { field: 'operation', displayName: '操作', cellTemplate: '<div class="ngCellText" ' + 'ng-class="col.colIndex()"><span ng-cell-text>' +
+                '<a href="#" ng-disabled="row.entity.status==1" ng-click="activate(row.entity.pkid)">激活</a>' +
+                '</span></div>'}
         ]
     }, $scope);
     kGrid.refresh($scope);
@@ -28,12 +30,14 @@ function ActivateCodeCtrl($scope, kGrid, appCache, $http) {
         }
     }, true);
 
+    // 按序列号搜索
     $scope.search = function (pkid) {
         $scope.queryParams.pkid = pkid;
         kGrid.refresh($scope);
     };
 
+    // 激活
     $scope.activate = function () {
-
+        $http.get();
     }
 }

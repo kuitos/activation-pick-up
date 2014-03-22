@@ -7,11 +7,11 @@
         SELECT Auto_increment FROM information_schema.tables WHERE table_name='tb_serial_code' LIMIT 1;
     </select>
 
-    <insert id="insertActivationCode" parameterType="list">
-        insert into tb_serial_code (code_password, status, activation_type, created)
+    <insert id="insertActivationCode" parameterType="map">
+        insert into tb_serial_code (pkid, code_password, status, activation_type, created)
         values
-        <foreach collection="list" item="map" separator=",">
-            (#{map},0,0,now())
+        <foreach collection="codesList" item="item" separator=",">
+            (#{item.number},#{item.code},0,0,now())
         </foreach>;
     </insert>
 
@@ -31,7 +31,7 @@
                 and status = #{status}
             </if>
             <if test="activationType != '' and activationType != null">
-                and activationType = #{activationType}
+                and activation_type = #{activationType}
             </if>
         </where>
         order by pkid
@@ -48,10 +48,13 @@
                 and status = #{status}
             </if>
             <if test="activationType != '' and activationType != null">
-                and activationType = #{activationType}
+                and activation_type = #{activationType}
             </if>
         </where>
-
     </select>
+
+    <update id="activateCode" parameterType="integer">
+        update tb_serial_code set status = 1 where pkid = ${pkid}
+    </update>
 
 </mapper>

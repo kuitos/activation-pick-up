@@ -24,16 +24,28 @@ public class ActivationCodeController extends BaseController {
     @Resource
     private ActivationCodeService activationCodeService;
 
+    /**
+     * 按数量生成序列号
+     *
+     * @param amount
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "genActivationCode", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public String genActivationCode(@RequestParam int amount) {
         int startNum = activationCodeService.getMaxSerialNumber();
         logger.debug("当前最大序列号为：" + startNum);
-        List<Object> codesList = SerialNumberUtil.batchGenSerialCode(startNum, amount);
+        List<Map<String, Object>> codesList = SerialNumberUtil.batchGenSerialCode(startNum, amount);
         activationCodeService.genActivationCodes(codesList);
         return "生成成功!";
     }
 
+    /**
+     * 查询序列号
+     *
+     * @param activationCodeVo
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "getActivationCode", method = RequestMethod.POST)
     public Map<String, Object> getActivationCodes(@RequestBody ActivationCodeVo activationCodeVo) {
@@ -53,4 +65,8 @@ public class ActivationCodeController extends BaseController {
         return genResultMapper(result, null);
     }
 
+    public String activateCode(@RequestParam int pkid) {
+        activationCodeService.activateCode(pkid);
+        return "激活成功!";
+    }
 }

@@ -53,16 +53,16 @@ public class SerialNumberUtil {
         return str;
     }
 
-    public static List<Object> batchGenSerialCode(int startCode, int amount) {
+    public static List<Map<String, Object>> batchGenSerialCode(int startCode, int amount) {
 
-        List<Object> codesList = new ArrayList<>();
+        List<Map<String, Object>> codesList = new ArrayList<>();
         Random random = new Random();
         for (int i = 0; i < amount; i++) {
             Map<String, Object> codeMap = new HashMap<>();
             String code = genSerialNumber(i + startCode + random.nextInt(1000));
             codeMap.put("number", startCode++);
             codeMap.put("code", code);
-            codesList.add(code);
+            codesList.add(codeMap);
         }
         if (codesList.size() != amount) {
             return null;
