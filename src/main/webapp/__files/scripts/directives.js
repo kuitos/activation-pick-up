@@ -103,7 +103,59 @@ angular.module("directives", ["directives/datepicker.html"]).directive("datePick
             document.getElementById(id).click();
         });
     };
-});
+}).provider('ngClip', function () {
+    var self = this;
+    this.path = '//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/1.3.2/ZeroClipboard.swf';
+    return {
+        setPath: function (newPath) {
+            self.path = newPath;
+        },
+        $get: function () {
+            return {
+                path: self.path
+            };
+        }
+    };
+}).run(['$document', 'ngClip', function ($document, ngClip) {
+    ZeroClipboard.config({
+        moviePath: ngClip.path,
+        trustedDomains: ["*"],
+        allowScriptAccess: "always",
+        forceHandCursor: true
+    });
+}]).directive('clipCopy', ['$window', 'ngClip', function ($window, ngClip) {
+    return {
+//        scope: {
+//            clipCopy: '&',
+//            clipClick: '&'
+//        },
+        restrict: 'A',
+        link: function (scope, element, attr) {
+            // Create the clip object
+            var clip = new ZeroClipboard(element);
+            clip.on('load', function (client) {
+                var onMouseDown = function (client) {
+                    client.setText(angular.toJson(scope.$eval(attr.clipCopy)));
+                    if (angular.isDefined(attr.clipClick)) {
+                        scope.$apply(attr.clipClick);
+                    }
+                };
+
+                var onComplete = function () {
+                    alert("联系人信息已成功复制到剪贴板!");
+                };
+
+                client.on('mouseDown', onMouseDown);
+                client.on('complete', onComplete);
+
+                scope.$on('$destroy', function () {
+                    client.off('mouseDown', onMouseDown);
+                    client.unclip(element);
+                });
+            });
+        }
+    };
+}]);
 
 angular.module("directives/datepicker.html", []).run(["$templateCache", function ($templateCache) {
     $templateCache.put("directives/datepicker.html", "<div class=\"input-append\">" + "     <input type=\"text\"/>" + "     <span class=\"add-on\"><i class=\"icon-calendar\"></i></span>" + "</div>");

@@ -1,8 +1,8 @@
 /**
-* Author: liukui
-* Date: 14-3-16
-* Time: 下午2:42
-*/
+ * Author: liukui
+ * Date: 14-3-16
+ * Time: 下午2:42
+ */
 angular.module("Activation", ["services", "directives", "filters"]).controller("MainCtrl", ["$scope", function ($scope) {
 
     $scope.panes = [
@@ -25,4 +25,6 @@ angular.module("Activation", ["services", "directives", "filters"]).controller("
 //            return pane.active;
 //        })[0];
     };
+}]).config(['ngClipProvider', function (ngClipProvider) {
+    ngClipProvider.setPath(root_files + "jsLib/ZeroClipboard/ZeroClipboard.swf");
 }]);

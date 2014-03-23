@@ -16,7 +16,11 @@ function ContactInfoCtrl($scope, kGrid, kModal) {
             { field: 'shipmentStatus', displayName: '发货状态', cellFilter: "num2Cn : 'shipmentStatus'"},
             { field: 'created', displayName: '发货时间', cellFilter: "date : 'yyyy-MM-dd HH:mm:ss'"},
             { field: 'modified', displayName: '更新时间', cellFilter: "date : 'yyyy-MM-dd HH:mm:ss'"},
-            { displayName: '操作', cellTemplate: '<div class="ngCellText" ' + 'ng-class="col.colIndex()">' + '<span ng-cell-text>' + '<a href="javascript:void(0)" ng-if="row.entity.shipmentStatus!=1" ng-click="deliverGoods(row.entity.pkid)">发货</a>' + '<a href="javascript:void(0)" ng-if="row.entity.shipmentStatus==1" ng-click="updateInfo(row.entity)">查看/编辑</a>' + '</span></div>'}
+            { displayName: '操作', cellTemplate: '<div class="ngCellText" ' + 'ng-class="col.colIndex()">'
+                + '<span ng-cell-text>'
+                + '<a href="javascript:void(0)" ng-if="row.entity.status==1&&row.entity.shipmentStatus!=1" ng-click="deliverGoods(row.entity.pkid)">发货</a>'
+                + '<a href="javascript:void(0)" ng-if="row.entity.shipmentStatus==1" ng-click="updateInfo(row.entity)">查看/编辑</a>'
+                + '</span></div>'}
         ]
     }, $scope);
     kGrid.refresh($scope);
