@@ -56,10 +56,9 @@ public class SerialNumberUtil {
     public static List<Map<String, Object>> batchGenSerialCode(int startCode, int amount) {
 
         List<Map<String, Object>> codesList = new ArrayList<>();
-        Random random = new Random();
         for (int i = 0; i < amount; i++) {
             Map<String, Object> codeMap = new HashMap<>();
-            String code = genSerialNumber(i + startCode + random.nextInt(1000));
+            String code = genSerialNumber(i + startCode);
             codeMap.put("number", startCode++);
             codeMap.put("code", code);
             codesList.add(codeMap);
@@ -71,7 +70,7 @@ public class SerialNumberUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(batchGenSerialCode(100000, 10000));
+        System.out.println(batchGenSerialCode(1, 100));
     }
 }
 
