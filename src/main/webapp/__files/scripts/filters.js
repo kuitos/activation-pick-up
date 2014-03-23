@@ -7,21 +7,17 @@
  * @author kui.liu
  * @since 2013-09-27
  */
-var filter = angular.module('recharge-Filter', []);
-filter.filter('checkmark', function () {
+var filter = angular.module('filters', []).filter('checkmark', function () {
     return function (input) {
         return input ? '\u2713' : '\u2718';
     };
-});
-
-//将数字表示的类型转换成中文展示
-filter.filter('num2Cn', function (appCache) {
+}).filter('num2Cn', ["appCache", function (appCache) {
     return function (input, type) {
         var num2CnMapper = appCache.get("num2CnMapper");
         if (typeof (num2CnMapper[type][input]) == 'undefined') {
-            return "";
+            return num2CnMapper[type]["else"];
         } else {
             return num2CnMapper[type][input];
         }
     };
-});
+}]);

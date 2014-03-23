@@ -1,0 +1,91 @@
+<!--
+ * Author: kui.liu
+ * Date: 2014/3/23 0023
+ * Time: 16:00
+ *-->
+<!--
+ * Author: kui.liu
+ * Date: 14-3-16
+ * Time: 下午9:58
+ *-->
+<nscript get-root type="text/javascript" _src="scripts/controllers/ContactInfoCtrl.js"></nscript>
+<div ng-controller="ContactInfoCtrl">
+    <nav class="navbar navbar-default" role="navigation">
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <label style="width: 50px;padding-top: 5px;">激活码</label>
+                <input ng-model="queryParams.codePassword" type="text" class="form-control input-sm" >
+                <!--<label style="width: 30px;padding-top: 5px;">序列号</label>-->
+                <!--<input ng-model="queryParams.activationType" type="text" class="form-control input-sm" >-->
+            </div>
+            <button type="button" class="btn btn-default" ng-click="search(queryParams.codePassword)">搜索</button>
+        </form>
+    </nav>
+
+    <div class="gridStyle" ng-grid="gridOptions"></div>
+</div>
+<script type="text/ng-template" id="deliverGoods.html">
+    <div class="modal-header">
+        <h4>填写联系人信息</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form" ng-submit="deliver(info)">
+            <div class="form-group">
+                <label class="col-md-2 control-label">联系电话</label>
+                <div class="col-sm-6">
+                    <input ng-model="info.phone" class="form-control" type="text" required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">地址</label>
+                <div class="col-sm-6">
+                    <input ng-model="info.address" class="form-control" type="text"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">物流编号</label>
+                <div class="col-sm-6">
+                    <input ng-model="info.expressNumber" class="form-control" type="text" required/>
+                </div>
+            </div>
+            <input type="submit" hidden="true" id="infoSubmit"/>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button button-link="infoSubmit" class="btn btn-primary">发货</button>
+        <button ng-click="close()" class="btn btn-primary" >取消</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="updateInfo.html">
+    <div class="modal-header">
+        <h4>查看/修改联系人信息</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form" ng-submit="save()">
+            <div class="form-group">
+                <label class="col-md-2 control-label">联系电话</label>
+                <div class="col-sm-6">
+                    <input ng-model="info.phone" class="form-control" type="text" required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">地址</label>
+                <div class="col-sm-6">
+                    <input ng-model="info.address" class="form-control" type="text"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">物流编号</label>
+                <div class="col-sm-6">
+                    <input ng-model="info.expressNumber" class="form-control" type="text" required/>
+                </div>
+            </div>
+            <input type="submit" hidden="true" id="update"/>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button button-link="update" class="btn btn-primary">保存</button>
+        <button ng-click="close()" class="btn btn-primary" >取消</button>
+    </div>
+</script>

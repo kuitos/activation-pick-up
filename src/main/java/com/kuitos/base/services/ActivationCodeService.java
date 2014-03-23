@@ -1,6 +1,7 @@
 package com.kuitos.base.services;
 
 import com.kuitos.base.beans.request.ActivationCodeVo;
+import com.kuitos.base.beans.request.ContactInfoVo;
 import com.kuitos.base.common.MybatisDao;
 import com.kuitos.base.utils.BeanUtil;
 import org.apache.ibatis.annotations.Param;
@@ -47,5 +48,21 @@ public class ActivationCodeService {
 
     public void activateCode(Map<String, Integer> paraMap) {
         mybatisDao.save("ActivationCode.activateCode", paraMap);
+    }
+
+    public List<Map<String, Object>> getActivationCodeInfo(ActivationCodeVo activationCodeVo) {
+        return mybatisDao.getList("ActivationCode.getCodeInfo", BeanUtil.transBean2Map(activationCodeVo));
+    }
+
+    public int countActivationCodeInfo(ActivationCodeVo activationCodeVo){
+        return mybatisDao.getSingleRow("ActivationCode.countActivationCodeInfo", BeanUtil.transBean2Map(activationCodeVo));
+    }
+
+    public void deliverGoods(ContactInfoVo contactInfoVo) {
+        mybatisDao.save("ActivationCode.addShipmentInfo", BeanUtil.transBean2Map(contactInfoVo));
+    }
+
+    public void updateContactInfo(ContactInfoVo contactInfoVo) {
+        mybatisDao.save("ActivationCode.updateShipmentInfo", BeanUtil.transBean2Map(contactInfoVo));
     }
 }

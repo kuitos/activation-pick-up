@@ -1,6 +1,7 @@
 package com.kuitos.base.controllers;
 
 import com.kuitos.base.beans.request.ActivationCodeVo;
+import com.kuitos.base.beans.request.ContactInfoVo;
 import com.kuitos.base.controllers.base.BaseController;
 import com.kuitos.base.services.ActivationCodeService;
 import com.kuitos.base.utils.SerialNumberUtil;
@@ -65,13 +66,71 @@ public class ActivationCodeController extends BaseController {
         return genResultMapper(result, null);
     }
 
+    /**
+     * 激活序列号
+     *
+     * @param pkid
+     * @param activationType
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "activateCode", method = RequestMethod.GET)
-    public String activateCode(@RequestParam int pkid, @RequestParam int activateType) {
+    public String activateCode(@RequestParam int pkid, @RequestParam int activationType) {
         Map<String, Integer> paraMap = new HashMap<>();
         paraMap.put("pkid", pkid);
-        paraMap.put("activateType", activateType);
+        paraMap.put("activationType", activationType);
         activationCodeService.activateCode(paraMap);
         return "激活成功!";
+    }
+
+    /**
+     * 获取联系人信息
+     *
+     * @param activationCodeVo
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getActivationCodeInfo", method = RequestMethod.POST)
+    public Map<String, Object> getActivationCodeInfo(@RequestBody ActivationCodeVo activationCodeVo) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            List<Map<String, Object>> codeList = activationCodeService.getActivationCodeInfo(activationCodeVo);
+            result.put("dataList", codeList);
+            activationCodeVo.setTotalItem(activationCodeService.countActivationCodeInfo(activationCodeVo));
+            result.put("currentPage", activationCodeVo.getCurrentPage());
+            result.put("pageSize", activationCodeVo.getPageSize());
+            result.put("total", activationCodeVo.getTotalItem());
+            result.put("totalPages", activationCodeVo.getTotalPage());
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return genResultByException(ex);
+        }
+        return genResultMapper(result, null);
+    }
+
+    /**
+     * 添加发货信息
+     *
+     * @param contactInfoVo
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "deliverGoods", method = RequestMethod.POST)
+    public String deliverGoods(@RequestBody ContactInfoVo contactInfoVo) {
+        activationCodeService.deliverGoods(contactInfoVo);
+        return "发货成功!";
+    }
+
+    /**
+     * 修改发货信息
+     *
+     * @param contactInfoVo
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "updateContactInfo", method = RequestMethod.POST)
+    public String updateContactInfo(@RequestBody ContactInfoVo contactInfoVo) {
+        activationCodeService.updateContactInfo(contactInfoVo);
+        return "修改成功!";
     }
 }

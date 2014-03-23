@@ -15,3 +15,8 @@
 .mt15 {
     margin-top: 15px;
 }
+
+/*-- tab页 --*/
+.tabbable li:hover {
+    cursor: pointer;
+}

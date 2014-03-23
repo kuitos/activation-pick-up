@@ -50,7 +50,8 @@
 
             addTag('script', {src: 'scripts/directives.js' }, sync);
             addTag('script', {src: 'scripts/services.js' }, sync);
-            addTag('script', {src: 'scripts/MainCtrl.js' }, sync);
+            addTag('script', {src: 'scripts/filters.js' }, sync);
+            addTag('script', {src: 'scripts/controllers/MainCtrl.js' }, sync);
 
             function addTag(name, attributes, sync) {
                 var el = document.createElement(name), attrName;

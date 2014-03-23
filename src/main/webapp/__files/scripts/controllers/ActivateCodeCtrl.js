@@ -3,7 +3,7 @@
  * Date: 14-3-16
  * Time: 下午10:00
  */
-function ActivateCodeCtrl($scope, kGrid, kModal, appCache, $http) {
+function ActivateCodeCtrl($scope, kGrid, kModal) {
 
     // 初始化grid
     kGrid.init({
@@ -11,11 +11,13 @@ function ActivateCodeCtrl($scope, kGrid, kModal, appCache, $http) {
         columnDefs: [
             { field: 'pkid', displayName: '序列号' },
             { field: 'codePassword', displayName: '激活码'},
-            { field: 'status', displayName: '激活状态' },
-            { field: 'activationType', displayName: '激活类型'},
-            { field: 'created', displayName: '生成时间'},
-            { field: 'modified', displayName: '修改时间'},
-            { field: 'operation', displayName: '操作', cellTemplate: '<div class="ngCellText" ' + 'ng-class="col.colIndex()"><span ng-cell-text>' + '<a href="#" ng-disabled="row.entity.status==1" ng-click="activate(row.entity.pkid)">激活</a>' + '</span></div>'}
+            { field: 'status', displayName: '激活状态', cellFilter: "num2Cn : 'activationStatus'"},
+            { field: 'activationType', displayName: '激活类型', cellFilter: "num2Cn : 'activationType'"},
+            { field: 'created', displayName: '生成时间', cellFilter: "date : 'yyyy-MM-dd HH:mm:ss'"},
+            { field: 'modified', displayName: '修改时间', cellFilter: "date : 'yyyy-MM-dd HH:mm:ss'"},
+            { field: 'operation', displayName: '操作', cellTemplate: '<div class="ngCellText" ' + 'ng-class="col.colIndex()"><span ng-cell-text>'
+                + '<a href="javascript:void(0)" ng-if="row.entity.status==0" ng-click="activate(row.entity.pkid)">激活</a>'
+                + '</span></div>'}
         ]
     }, $scope);
     kGrid.refresh($scope);
@@ -42,12 +44,14 @@ function ActivateCodeCtrl($scope, kGrid, kModal, appCache, $http) {
 
 function confirmCtrl($scope, $modalInstance, kGrid, items, $http) {
 
-    $scope.activateType = 1;
+    $scope.activationType = 1;
 
-    $scope.save = function (activateType) {
+    $scope.save = function (activationType) {
         if (confirm("确认激活序列号为 " + items.pkid + " 的激活卡么？")) {
-            $http.get(root + "ctrl/activationCode/activateCode?pkid=" + items.pkid + "&activateType=" + activateType).success(function () {
+            debugger;
+            $http.get(root + "ctrl/activationCode/activateCode?pkid=" + items.pkid + "&activationType=" + activationType).success(function () {
                 kGrid.currentPageRefresh(items.scope);
+                $scope.close();
             }).error(function () {
                 alert("激活失败!");
             });

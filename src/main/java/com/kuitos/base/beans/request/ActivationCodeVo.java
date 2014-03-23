@@ -11,6 +11,8 @@ public class ActivationCodeVo extends BaseQuery {
 
     // 序列号
     private String pkid;
+    // 密码
+    private String codePassword;
     // 激活状态
     private String status;
     // 激活类型
@@ -38,5 +40,13 @@ public class ActivationCodeVo extends BaseQuery {
 
     public void setActivationType(String activationType) {
         this.activationType = activationType;
+    }
+
+    public String getCodePassword() {
+        return codePassword;
+    }
+
+    public void setCodePassword(String codePassword) {
+        this.codePassword = codePassword;
     }
 }

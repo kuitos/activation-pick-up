@@ -57,4 +57,55 @@
         update tb_serial_code set status = 1,modified=now(),activation_type = #{activationType} where pkid = #{pkid};
     </update>
 
+    <select id="getCodeInfo" parameterType="map" resultType="map">
+        select a.pkid
+        , a.code_password as codePassword
+        ,a.status
+        ,a.activation_type as activationType
+        ,b.created
+        ,b.modified
+        ,b.phone
+        ,b.address
+        ,b.express_number as expressNumber
+        ,b.shipment_status as shipmentStatus
+            from tb_serial_code a
+        left join tb_contact_info b
+            on a.pkid=b.serial_number
+        <where>
+            <if test="codePassword != '' and codePassword != null">
+                a.code_password like '%${codePassword}%'
+            </if>
+            <if test="pkid != null and pkid != ''">
+                and a.pkid = #{pkid}
+            </if>
+        </where>
+        order by a.pkid
+        limit ${startRow},${pageSize}
+    </select>
+
+    <select id="countActivationCodeInfo" parameterType="map" resultType="integer">
+        select count(0)
+            from tb_serial_code a
+        left join tb_contact_info b
+        on a.pkid=b.serial_number
+        <where>
+            <if test="codePassword != '' and codePassword != null">
+                a.code_password like '%${codePassword}%'
+            </if>
+            <if test="pkid != null and pkid != ''">
+                and a.pkid = #{pkid}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addShipmentInfo" parameterType="map">
+        insert into tb_contact_info (serial_number, phone, address, express_number, shipment_status, created)
+            values(#{serialNumber}, #{phone},#{address},#{expressNumber}, 1, now());
+    </insert>
+
+    <update id="updateShipmentInfo" parameterType="map">
+        update tb_contact_info set phone = #{phone}, address = #{address}, express_number = #{expressNumber}, modified = now()
+            where serial_number = #{serialNumber}
+    </update>
+
 </mapper>

@@ -85,22 +85,16 @@ angular.module('services', ['ngGrid', 'ui.bootstrap']).service("kGrid", ["$http"
      */
     var cache = $cacheFactory("appCache");
     var num2CnMapper = {
-        gatewayType: {
-            1: "独立结算",
-            2: "共享",
-            3: "独享"
+        shipmentStatus: {
+            1: "已发货",
+            else: "未发货"
         },
-        payType: {
-            0: "预付费",
-            1: "后付费"
+        activationStatus: {
+            0: "未激活",
+            1: "已激活"
         },
-        signType: {
-            0: "无签名时加上签名值",
-            1: "强制加签名值"
-        },
-        smsPackageStatus: {
-            0: "销售中",
-            1: "已停售"
+        activationType: {
+            1: "三斤樱桃"
         }
     };
     cache.put("num2CnMapper", num2CnMapper);
